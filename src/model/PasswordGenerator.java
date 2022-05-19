@@ -9,7 +9,7 @@ public class PasswordGenerator {
     private static final String alpha = "abcdefghijklmnopqrstuvwxyz";
     private static final String alphaCaps = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String numeric = "0123456789";
-    private static final String specials = "!§$%&/()=?.:,;+*#<>";
+    private static final String specials = "!§$%&/()=?.:,;+*#<>~{[]}";
 
     private SecureRandom random = new SecureRandom();
     private BooleanProperty withNumbers = new SimpleBooleanProperty();
