@@ -1,5 +1,6 @@
 package main;
 
+import controllerview.loginScreen.LoginScreenC;
 import controllerview.passwordGenerator.PasswordGeneratorC;
 import controllerview.registerScreen.RegisterScreenC;
 import javafx.application.Application;
@@ -14,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        PasswordGeneratorC.show(primaryStage);
+        LoginScreenC.show(primaryStage);
     }
 
     @Override

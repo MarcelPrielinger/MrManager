@@ -1,8 +1,13 @@
 package model;
 
+import controllerview.passwordGenerator.PasswordGeneratorC;
+import controllerview.registerScreen.RegisterScreenC;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,6 +22,7 @@ public class Login {
     private StringProperty username = new SimpleStringProperty();
     private StringProperty password = new SimpleStringProperty();
     private StringProperty error = new SimpleStringProperty();
+    public boolean b = false;
 
     public Login() {
     }
@@ -70,7 +76,9 @@ public class Login {
             if(data[0].equals(username.getValue()) && data[1].equals(password.getValue()))
             {
                 System.out.println("Hello");
-                //Klasse wechslen
+                Stage stage = new Stage();
+                PasswordGeneratorC.show(stage);
+                b = true;
             }
             else {
             }

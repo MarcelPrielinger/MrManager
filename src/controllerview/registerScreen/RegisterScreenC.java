@@ -1,5 +1,6 @@
 package controllerview.registerScreen;
 
+import controllerview.loginScreen.LoginScreenC;
 import controllerview.passwordGenerator.PasswordGeneratorC;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -43,13 +44,16 @@ public class RegisterScreenC {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-        PasswordGeneratorC.show(stage);
+        LoginScreenC.show(stage);
     }
 
     @FXML
     void createOnAction(ActionEvent event) throws IOException {
         create();
-        //Zurück zu Login Screen
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+        LoginScreenC.show(stage);
     }
 
     private Register model = new Register();

@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -35,11 +36,23 @@ public class LoginScreenC {
     @FXML
     void loginOnAction(ActionEvent event) throws IOException {
         login();
+        if(!model.b)
+        {
+
+        }
+        else {
+            Node source = (Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @FXML
     void registerOnAction(ActionEvent event) {
-
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+        RegisterScreenC.show(stage);
     }
 
     private Login model = new Login();
@@ -62,6 +75,7 @@ public class LoginScreenC {
 
     private void login() throws IOException {
         model.newLogin();
+        l_error.setText("");
     }
 
     @FXML
