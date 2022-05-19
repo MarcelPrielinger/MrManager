@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -35,7 +36,10 @@ public class RegisterScreenC {
 
     @FXML
     void backOnAction(ActionEvent event) {
-
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+        PasswordGeneratorC.show(stage);
     }
 
     @FXML
