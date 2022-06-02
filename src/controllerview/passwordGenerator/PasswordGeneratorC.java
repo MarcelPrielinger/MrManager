@@ -1,4 +1,5 @@
 package controllerview.passwordGenerator;
+import controllerview.loginScreen.LoginScreenC;
 import controllerview.registerScreen.RegisterScreenC;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -74,7 +75,7 @@ public class PasswordGeneratorC {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-        RegisterScreenC.show(stage);
+        LoginScreenC.show(stage);
     }
 
     @FXML
