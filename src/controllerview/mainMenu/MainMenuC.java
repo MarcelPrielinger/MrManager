@@ -1,5 +1,6 @@
 package controllerview.mainMenu;
 
+import controllerview.addPasswordScreen.AddPasswordScreenC;
 import controllerview.loginScreen.LoginScreenC;
 import controllerview.passwordGenerator.PasswordGeneratorC;
 import javafx.application.Platform;
@@ -61,6 +62,6 @@ public class MainMenuC {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-        //AddPasswordScreenC.show(stage);
+        AddPasswordScreenC.show(stage);
     }
 }
