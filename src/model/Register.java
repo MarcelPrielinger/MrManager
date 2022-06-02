@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -41,6 +42,13 @@ public class Register {
 
 
     public void newUser() throws IOException {
+
+        File f = new File("./src/files/loginData.csv");
+
+        if(f == null)
+        {
+            f.createNewFile();
+        }
         String filename = "./src/files/loginData.csv";
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
