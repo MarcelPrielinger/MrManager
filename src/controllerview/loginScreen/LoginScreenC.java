@@ -1,5 +1,7 @@
 package controllerview.loginScreen;
 
+import controllerview.mainMenu.MainMenuC;
+import controllerview.passwordGenerator.PasswordGeneratorC;
 import controllerview.registerScreen.RegisterScreenC;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -36,14 +38,11 @@ public class LoginScreenC {
     @FXML
     void loginOnAction(ActionEvent event) throws IOException {
         login();
-        if(!model.b)
-        {
-
-        }
-        else {
+        if(model.b) {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
+            MainMenuC.show(stage);
         }
     }
 

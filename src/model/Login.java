@@ -1,5 +1,6 @@
 package model;
 
+import controllerview.mainMenu.MainMenuC;
 import controllerview.passwordGenerator.PasswordGeneratorC;
 import controllerview.registerScreen.RegisterScreenC;
 import javafx.beans.property.SimpleStringProperty;
@@ -75,9 +76,6 @@ public class Login {
             String[] data = line.split(splitBy);
             if(data[0].equals(username.getValue()) && data[1].equals(password.getValue()))
             {
-                System.out.println("Hello");
-                Stage stage = new Stage();
-                PasswordGeneratorC.show(stage);
                 b = true;
             }
             else {
