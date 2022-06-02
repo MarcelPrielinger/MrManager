@@ -1,7 +1,6 @@
 package controllerview.mainMenu;
 
 import controllerview.addPasswordScreen.AddPasswordScreenC;
-import controllerview.loginScreen.LoginScreenC;
 import controllerview.passwordGenerator.PasswordGeneratorC;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -11,15 +10,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Password;
 
 import java.io.IOException;
 
 public class MainMenuC {
 
     @FXML
-    private ListView<?> lvPasswords;
+    private TableView tvPasswords;
 
     @FXML
     private Button btnGenerate;
@@ -30,7 +32,30 @@ public class MainMenuC {
     @FXML
     public void initialize()
     {
+        TableColumn usernameCol = new TableColumn("Benutzername");
+        usernameCol.setMinWidth(100);
+        usernameCol.setCellValueFactory(
+                new PropertyValueFactory<Password, String>("username"));
 
+        TableColumn passwordCol = new TableColumn("Passwort");
+        passwordCol.setMinWidth(100);
+        passwordCol.setCellValueFactory(
+                new PropertyValueFactory<Password, String>("password"));
+
+        TableColumn commentCol = new TableColumn("Kommentar");
+        commentCol.setMinWidth(200);
+        commentCol.setCellValueFactory(
+                new PropertyValueFactory<Password, String>("comment"));
+
+        try {
+            tvPasswords.setItems(Password.readCSV());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        tvPasswords.getColumns().addAll(usernameCol, passwordCol, commentCol);
     }
 
     public static void show(Stage stage) {
