@@ -41,7 +41,7 @@ public class AddPasswordScreenC {
     private Button btn_back;
 
     @FXML
-    void addOnAction(ActionEvent event) throws IOException, NoSuchAlgorithmException {
+    void addOnAction(ActionEvent event) throws Exception {
         addPwd();
     }
 
@@ -71,7 +71,7 @@ public class AddPasswordScreenC {
         }
     }
 
-    private void addPwd() throws IOException, NoSuchAlgorithmException {
+    private void addPwd() throws Exception {
         if(!tf_username.getText().isEmpty() && !tf_password.getText().isEmpty())
         {
             model.add();
