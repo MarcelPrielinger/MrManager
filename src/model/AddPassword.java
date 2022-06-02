@@ -3,15 +3,17 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class AddPassword {
@@ -20,6 +22,10 @@ public class AddPassword {
     private StringProperty comment = new SimpleStringProperty();
     private StringProperty password = new SimpleStringProperty();
     private StringProperty error = new SimpleStringProperty();
+
+    private static SecretKeySpec secretKeySpec;
+    private static byte[] key;
+    private static final String ALGORITHM = "AES";
 
     public AddPassword() {
 
@@ -73,7 +79,41 @@ public class AddPassword {
         this.error.set(error);
     }
 
-    public void add() throws IOException, NoSuchAlgorithmException {
+    public void prepareSecreteKey(String myKey) {
+        MessageDigest sha = null;
+        try {
+            key = myKey.getBytes(StandardCharsets.UTF_8);
+            sha = MessageDigest.getInstance("SHA-1");
+            key = sha.digest(key);
+            key = Arrays.copyOf(key, 16);
+            secretKeySpec = new SecretKeySpec(key, ALGORITHM);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String encrypt(String strToEncrypt, String secret)
+    {
+        try {
+            prepareSecreteKey(secret);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+            return Base64.getEncoder().encodeToString(cipher.doFinal(Base64.getDecoder().decode(strToEncrypt)));
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void add() throws Exception {
         String filename = "./src/files/passwords.csv";
         File file = new File(filename);
 
@@ -85,15 +125,10 @@ public class AddPassword {
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
 
 
-        String s = String.format(username.getValue() + "," + comment.getValue() + "," + generateKey(password.getValue()) + "\n");
+        String s = String.format(username.getValue() + "," + comment.getValue() + "," + encrypt(password.getValue(), String.valueOf(secretKeySpec)) + "\n");
         writer.write(s);
 
         writer.close();
     }
 
-    public static SecretKey generateKey(String s) throws NoSuchAlgorithmException {
-        byte[] decodedKey = Base64.getDecoder().decode(s);
-        SecretKey key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-        return key;
-    }
 }
