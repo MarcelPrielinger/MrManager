@@ -1,5 +1,6 @@
 package main;
 
+import controllerview.addPasswordScreen.AddPasswordScreenC;
 import controllerview.loginScreen.LoginScreenC;
 import javafx.application.Application;
 import javafx.stage.Stage;

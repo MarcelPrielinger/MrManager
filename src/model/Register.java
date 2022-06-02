@@ -43,13 +43,14 @@ public class Register {
 
     public void newUser() throws IOException {
 
-        File f = new File("./src/files/loginData.csv");
-
-        if(f == null)
-        {
-            f.createNewFile();
-        }
         String filename = "./src/files/loginData.csv";
+        File file = new File(filename);
+
+        if(file == null)
+        {
+            file.createNewFile();
+        }
+
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
 

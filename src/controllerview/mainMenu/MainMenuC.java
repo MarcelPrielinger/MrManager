@@ -1,5 +1,7 @@
 package controllerview.mainMenu;
 
+import controllerview.addPasswordScreen.AddPasswordScreenC;
+import controllerview.loginScreen.LoginScreenC;
 import controllerview.passwordGenerator.PasswordGeneratorC;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,18 +11,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import model.Password;
 
 import java.io.IOException;
 
 public class MainMenuC {
 
     @FXML
-    private TableView tvPasswords;
+    private ListView<?> lvPasswords;
 
     @FXML
     private Button btnGenerate;
@@ -31,34 +30,7 @@ public class MainMenuC {
     @FXML
     public void initialize()
     {
-        tvPasswords.setEditable(true);
 
-        TableColumn usernameCol = new TableColumn("Benutzername");
-        TableColumn passwordCol = new TableColumn("Passwort");
-        TableColumn commentCol = new TableColumn("Kommentar");
-
-        usernameCol.setCellValueFactory(
-                new PropertyValueFactory<Password,String>("username")
-        );
-        passwordCol.setCellValueFactory(
-                new PropertyValueFactory<Password,String>("password")
-        );
-        commentCol.setCellValueFactory(
-                new PropertyValueFactory<Password,String>("comment")
-        );
-
-        try {
-            tvPasswords.setItems(Password.readCSV());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        usernameCol.setMinWidth(100);
-        passwordCol.setMinWidth(100);
-        commentCol.setMinWidth(100);
-
-        tvPasswords.getColumns().clear();
-        tvPasswords.getColumns().addAll(usernameCol, passwordCol, commentCol);
     }
 
     public static void show(Stage stage) {
@@ -90,6 +62,6 @@ public class MainMenuC {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-        //AddPasswordScreenC.show(stage);
+        AddPasswordScreenC.show(stage);
     }
 }
