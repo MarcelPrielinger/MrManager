@@ -23,10 +23,6 @@ public class Password {
     private String password;
     private String comment;
 
-    private static SecretKeySpec secretKey;
-    private static byte[] key;
-    private static final String ALGORITHM = "AES";
-
     public Password(String username, String comment, String password) {
         this.username = username;
         this.password = password;
@@ -68,34 +64,9 @@ public class Password {
         while ((line = reader.readLine()) != null)
         {
             String[] data = line.split(splitBy);
-            passwords.add(new Password(data[0],decrypt(data[1],String.valueOf(secretKey)),data[2]));
+            passwords.add(new Password(data[0],data[1],Cryption.decrypt(data[2],"secret")));
         }
         return passwords;
-    }
-
-    public static String decrypt(String strToDecrypt, String secret) {
-        try {
-            prepareSecreteKey(secret);
-            Cipher cipher = Cipher.getInstance(ALGORITHM);
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-        } catch (Exception e) {
-            System.out.println("Error while decrypting: " + e.toString());
-        }
-        return null;
-    }
-
-    public static void prepareSecreteKey(String myKey) {
-        MessageDigest sha = null;
-        try {
-            key = myKey.getBytes(StandardCharsets.UTF_8);
-            sha = MessageDigest.getInstance("SHA-1");
-            key = sha.digest(key);
-            key = Arrays.copyOf(key, 16);
-            secretKey = new SecretKeySpec(key, ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
     }
 }
 

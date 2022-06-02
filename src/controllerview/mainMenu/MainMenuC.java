@@ -55,7 +55,7 @@ public class MainMenuC {
             e.printStackTrace();
         }
 
-        tvPasswords.getColumns().addAll(usernameCol, passwordCol, commentCol);
+        tvPasswords.getColumns().addAll(usernameCol, commentCol, passwordCol);
     }
 
     public static void show(Stage stage) {

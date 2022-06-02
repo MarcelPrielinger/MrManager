@@ -23,10 +23,6 @@ public class AddPassword {
     private StringProperty password = new SimpleStringProperty();
     private StringProperty error = new SimpleStringProperty();
 
-    private static SecretKeySpec secretKeySpec;
-    private static byte[] key;
-    private static final String ALGORITHM = "AES";
-
     public AddPassword() {
 
     }
@@ -79,40 +75,6 @@ public class AddPassword {
         this.error.set(error);
     }
 
-    public void prepareSecreteKey(String myKey) {
-        MessageDigest sha = null;
-        try {
-            key = myKey.getBytes(StandardCharsets.UTF_8);
-            sha = MessageDigest.getInstance("SHA-1");
-            key = sha.digest(key);
-            key = Arrays.copyOf(key, 16);
-            secretKeySpec = new SecretKeySpec(key, ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String encrypt(String strToEncrypt, String secret)
-    {
-        try {
-            prepareSecreteKey(secret);
-            Cipher cipher = Cipher.getInstance(ALGORITHM);
-            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-            return Base64.getEncoder().encodeToString(cipher.doFinal(Base64.getDecoder().decode(strToEncrypt)));
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public void add() throws Exception {
         String filename = "./src/files/passwords.csv";
         File file = new File(filename);
@@ -125,7 +87,7 @@ public class AddPassword {
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
 
 
-        String s = String.format(username.getValue() + "," + comment.getValue() + "," + encrypt(password.getValue(), String.valueOf(secretKeySpec)) + "\n");
+        String s = String.format(username.getValue() + "," + comment.getValue() + "," + Cryption.encrypt(password.getValue(),"secret") + "\n");
         writer.write(s);
 
         writer.close();
