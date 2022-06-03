@@ -23,6 +23,8 @@ public class AddPassword {
     private StringProperty password = new SimpleStringProperty();
     private StringProperty error = new SimpleStringProperty();
 
+    private StringProperty newPwd = new SimpleStringProperty();
+
     public AddPassword() {
 
     }
@@ -73,6 +75,18 @@ public class AddPassword {
 
     public void setError(String error) {
         this.error.set(error);
+    }
+
+    public String getNewPwd() {
+        return newPwd.get();
+    }
+
+    public StringProperty newPwdProperty() {
+        return newPwd;
+    }
+
+    public void setNewPwd(String newPwd) {
+        this.newPwd.set(newPwd);
     }
 
     public void add() throws Exception {

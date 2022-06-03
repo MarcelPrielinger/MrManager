@@ -1,4 +1,5 @@
 package controllerview.passwordGenerator;
+import controllerview.addPasswordScreen.AddPasswordScreenC;
 import controllerview.loginScreen.LoginScreenC;
 import controllerview.mainMenu.MainMenuC;
 import controllerview.registerScreen.RegisterScreenC;
@@ -17,6 +18,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
+import model.AddPassword;
 import model.PasswordGenerator;
 
 import java.io.IOException;
@@ -46,6 +48,10 @@ public class PasswordGeneratorC {
 
     @FXML
     private Button btnBack;
+
+    @FXML
+    private Button btnAdd;
+
 
     private PasswordGenerator model = new PasswordGenerator();
 
@@ -77,6 +83,14 @@ public class PasswordGeneratorC {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
         MainMenuC.show(stage);
+    }
+
+    @FXML
+    void btnAddOnAction(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+        AddPasswordScreenC.show(stage);
     }
 
     @FXML
